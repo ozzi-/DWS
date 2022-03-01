@@ -13,12 +13,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import it.sauronsoftware.junique.AlreadyLockedException;
+import it.sauronsoftware.junique.JUnique;
 import main.java.ui.AddJobView;
 import main.java.ui.CTrayIcon;
 import main.java.ui.SchedulesView;
 import main.java.util.Output;
 import main.java.util.Persistence;
- 
+
 public class DWS {
 
   public static final String APP_NAME = "dws";
@@ -29,6 +31,23 @@ public class DWS {
 
   public static void main(String[] args) {
 
+    String appId = "DWS";
+    boolean alreadyRunning;
+    try {
+      JUnique.acquireLock(appId, message -> {
+        if (jobsFrame != null) {
+          jobsFrame.setVisible(true);
+          Output.outputError("Received message by newly executed DWS: " + message);
+        }
+        return message;
+      });
+      alreadyRunning = false;
+    } catch (AlreadyLockedException e) {
+      alreadyRunning = true;
+    }
+    if (alreadyRunning) {
+      JUnique.sendMessage(appId, "i guess i am too late");
+    }
 
     try {
       UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
