@@ -31,13 +31,16 @@ public class DWS {
 
   public static void main(String[] args) {
 
+
     String appId = "DWS";
+    Output.output(appId + " starting");
     boolean alreadyRunning;
     try {
       JUnique.acquireLock(appId, message -> {
         if (jobsFrame != null) {
+          Output.output("Received message by newly executed DWS: " + message);
           jobsFrame.setVisible(true);
-          Output.outputError("Received message by newly executed DWS: " + message);
+          jobsFrame.setVisible(true);
         }
         return message;
       });
@@ -46,7 +49,10 @@ public class DWS {
       alreadyRunning = true;
     }
     if (alreadyRunning) {
-      JUnique.sendMessage(appId, "i guess i am too late");
+      String tooLate = "i guess i am too late";
+      JUnique.sendMessage(appId, tooLate);
+      Output.output(appId + " can't start:" + tooLate);
+      System.exit(0);
     }
 
     try {
