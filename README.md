@@ -30,6 +30,7 @@ Double clicking a job will display info about the last request sent:
 1. Download built jar from "Releases"
 2. Create batch file
 ```bat
-START /MIN CMD.EXE /C java -jar C:\<change_this>\DWS\dws-jar-with-dependencies.jar
+@echo off
+start javaw -jar C:\<change_this>\DWS\dws-jar-with-dependencies.jar
 ```
 3. Create a shortcut to said batch under %appdata%\Microsoft\Windows\Start Menu\Programs\Startup
