@@ -25,3 +25,11 @@ If a scheduled call fails (as in returns a non 200-399 status code), you will be
 Double clicking a job will display info about the last request sent:
 
 ![6](https://user-images.githubusercontent.com/7944573/155947208-b53926c2-c3c2-4961-a297-3d6dff5889f7.png)
+
+## Setup Windows
+1. Download built jar from "Releases"
+2. Create batch file
+```bat
+START /MIN CMD.EXE /C java -jar C:\<change_this>\DWS\dws-jar-with-dependencies.jar
+```
+3. Create a shortcut to said batch under %appdata%\Microsoft\Windows\Start Menu\Programs\Startup
